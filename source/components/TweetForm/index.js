@@ -1,6 +1,10 @@
 'use strict'
 import React from 'react'
 import { handler } from '../../API/index.js'
+// const handler = (args) => {
+//   console.clear()
+//   console.log(args)
+// }
 
 function handleSubmit(event) {
   event.preventDefault()
@@ -12,14 +16,29 @@ function handleSubmit(event) {
 
   // Grab the photo. XXX: could be undefined
   const media = document.getElementById('file').files[0]
-  const path = media ? media.path : undefined
 
   // Reset the form
   form.value = ''
   document.getElementById('file').value = ''
   document.getElementById('remaining').innerHTML = `140 remaining`
 
-  return handler({ media, status })
+  if (media) {
+    const reader = new FileReader()
+    reader.onload = event => {
+      const file = event.target.result.split(',').pop()
+      return handler({
+        media: {
+          data: file,
+          fileType: media.name.split('.').pop().toLowerCase()
+        }, status,
+      })
+    }
+
+    return reader.readAsDataURL(media)
+  }
+  else {
+    handler({ status })
+  }
 }
 
 function handleTyping(event) {

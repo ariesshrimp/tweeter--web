@@ -16,6 +16,7 @@ export const lambdaPromise = params => {
 }
 
 export const invokeLambda = payload => {
+  console.log('running to lambda...')
   const json = JSON.stringify(payload)
   return lambdaPromise({
     FunctionName,
@@ -24,11 +25,11 @@ export const invokeLambda = payload => {
 }
 
 export const handler = (payload)  => {
-  return invokeLambdaFetch(payload)
-    .then(response => JSON.parse(response))
+  return invokeLambda(payload)
+    // .then(response => JSON.parse(response))
     .then(results => {
       console.log(results)
       return results
     })
-    .catch(error => throw error)
+    .catch(error => {throw error})
 }

@@ -1,10 +1,13 @@
 {
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "zip": "zip -r handler.zip .",
+    "deploy": "npm run zip && aws lambda update-function-code --function-name twitter-api --zip-file fileb://handler.zip --publish"
   },
   "dependencies": {
     "firebase": "^3.4.1",
+    "google-cloud": "^0.41.2",
     "twit": "^2.2.5"
   }
 }
