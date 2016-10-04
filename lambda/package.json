@@ -3,7 +3,9 @@
   "scripts": {
     "start": "node index.js",
     "zip": "zip -r handler.zip .",
-    "deploy": "npm run zip && aws lambda update-function-code --function-name twitter-api --zip-file fileb://handler.zip --publish"
+    "s3": "aws s3 cp handler.zip s3://lambda-code-jf2/handler.zip",
+    "lambda": "aws lambda update-function-code --publish --function-name twitter-api --s3-bucket lambda-code-jf2 --s3-key handler.zip",
+    "deploy": "npm run zip && npm run s3 && npm run lambda"
   },
   "dependencies": {
     "firebase": "^3.4.1",
