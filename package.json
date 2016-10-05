@@ -1,7 +1,8 @@
 {
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server",
+    "deploy": "firebase deploy"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
