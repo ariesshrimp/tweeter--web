@@ -38,6 +38,13 @@ function storeTweet(data) {
 
   if (media) {
     console.log('Firebase found media...')
+    // Twitter dumps the media url back in as Tweet content, so you have to strip it to avoid redundancy
+    tweet.text = tweet.entities.media
+      .map(entity => entity.url)
+      .reduce((prev, next, index, array) => {
+        return tweet.text.replace(next, '')
+      }, tweet.text)
+
     return note.set(tweet).then(result => {
       console.log('uploading picture to storage...')
 
